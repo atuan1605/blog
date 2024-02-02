@@ -1,7 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import vuetify from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   devtools: { enabled: true },
+  build: {
+        transpile: ['vuetify'],
+  },
   typescript: {
         shim: false
   },
@@ -14,6 +18,7 @@ export default defineNuxtConfig({
   svgo: {
     defaultImport: 'component'
   },
+  
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -25,4 +30,13 @@ export default defineNuxtConfig({
         apiBase: ''
     }
   },
+   hooks: {
+        'vite:extendConfig': (config) => {
+            config.plugins?.push(vuetify({
+                styles: {
+                    configFile: 'assets/css/settings.scss'
+                }
+            }))
+        }
+    }
 });
